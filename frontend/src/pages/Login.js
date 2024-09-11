@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa6";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +14,8 @@ const Login = () => {
 
     await login(email, password);
   };
+
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <form
@@ -34,9 +39,32 @@ const Login = () => {
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 "
       />
 
-      <div className="flex justify-center">
-        <button className="bg-[#a855f7] w-fit  px-20 py-3" disabled={isLoading}>
+      <div className="flex justify-center flex-col gap-5">
+        <button
+          type="submit"
+          className="bg-[#a855f7]   px-20 py-3"
+          disabled={isLoading}
+        >
           Log in
+        </button>
+
+        <button
+          type="button"
+          className="bg-white flex gap-5 justify-center items-center px-20 py-3"
+          onClick={() => loginWithRedirect()}
+        >
+          <FcGoogle className="text-3xl" />
+          Sign in with Google
+        </button>
+
+        <button
+          type="button"
+          className="bg-white flex gap-5 justify-center items-center px-20 py-3"
+          onClick={() => loginWithRedirect()}
+        >
+          {" "}
+          <FaFacebook className="text-3xl text-blue-500" />
+          Sign in with Google
         </button>
       </div>
       {error && <div className="error">{error}</div>}
